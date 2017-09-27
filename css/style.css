@@ -1,0 +1,42 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-size: 15px;
+  line-height: 24px;
+  margin: 0;
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
+
+.account-list-account {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f7f7 !important;
+  font-size: 20px;
+}
+
+.account-form {
+  padding: 15px;
+}
+
+.show-hidden-accounts {
+  width: auto !important;
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+}
