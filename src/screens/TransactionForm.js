@@ -38,7 +38,7 @@ export default class TransactionForm extends PureComponent {
     this.state = {
       amount: props.transaction.amount || '',
       amountValidation: '',
-      date: props.transaction.date || new Date(),
+      date: props.transaction.date ? new Date(props.transaction.date) : new Date(),
       accountId: props.transaction.accountId || accountId
     };
   }
@@ -84,9 +84,9 @@ export default class TransactionForm extends PureComponent {
     const transactionId = get(this.props, 'params.transactionId');
     const {accountId, date} = this.state;
     if (isEmpty(transactionId)) {
-      this.props.createTransactionAction(uuidv4(), accountId, amountNumber, date);
+      this.props.createTransactionAction(uuidv4(), accountId, amountNumber, date.toISOString());
     } else {
-      this.props.updateTransactionAction(transactionId, accountId, amountNumber, date);
+      this.props.updateTransactionAction(transactionId, accountId, amountNumber, date.toISOString());
     }
     
     this.props.history.push('/');
