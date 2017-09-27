@@ -11,6 +11,8 @@ const transactions = (state = [], action) => {
       return [...state, payload]
     case "DELETE_ACCOUNT":
       return filter(state, transaction => transaction.accountId !== payload.id)
+    case "DELETE_TRANSACTIONS":
+      return filter(state, transaction => !payload.transactionIdList.includes(transaction.id))
   }
   return state
 }

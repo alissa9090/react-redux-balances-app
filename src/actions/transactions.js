@@ -4,3 +4,10 @@ export function createTransaction(id, accountId, amount, date = new Date().getTi
     payload: {id, accountId, amount, date}
   }
 }
+
+export function deleteTransactions(transactionIdList) {
+  return {
+    type: "DELETE_TRANSACTIONS",
+    payload: {transactionIdList}
+  }
+}
