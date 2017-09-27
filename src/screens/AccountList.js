@@ -82,9 +82,12 @@ class AccountMenu extends PureComponent {
 const Account = ({id, name, balance, hidden, restoreAccountAction, hideAccountAction, deleteAccountAction}) => {
   return (
     <Paper className="account-list-account" zDepth={2}>
-      <div>
-        {`${name}: ${balance} €`}
-      </div>
+      <Link to={{ pathname: '/transaction-form', search: `?accountId=${id}` }}>
+        <div>
+          <span>{`${name}: `}</span>
+          <span className={balance < 0 ? 'negative-number' : ''}>{`${balance} €`}</span>
+        </div>
+      </Link>
       <AccountMenu
         accountId={id}
         hidden={hidden}
@@ -128,8 +131,8 @@ export default class AccountList extends PureComponent {
     return (
       <div>
         <AppBar
-          title={`Current balance: ${totalBalance} €`}
-          showMenuIconButton={true}
+          title={`Balance: ${totalBalance} €`}
+          showMenuIconButton={false}
           iconElementRight={<MainMenu />}
         />
         <div>

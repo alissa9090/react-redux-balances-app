@@ -1,8 +1,8 @@
-import {get} from 'lodash';
+import { get, toNumber } from 'lodash';
+import Big from 'big.js';
 
 const balances = (state = {
-  total: 0,
-  accountBalances: {}
+  total: 0
 }, action) => {
   const {type, payload} = action;
   switch (type) {
@@ -11,10 +11,8 @@ const balances = (state = {
       return {...state, ...initiallBalances}
     }
     case "CREATE_TRANSACTION": {
-      const total = state.total + payload.amount;
-      const accountBalance = get(state.accountBalances, payload.accountId, 0) + payload.amount;
-
-      return {total, accountBalances: {...accountBalances, [payload.accountId]: accountBalance}}
+      const total = Big(state.total).plus(payload.amount).toString();
+      return {total: toNumber(total)};
     }
   }
   return state

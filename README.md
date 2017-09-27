@@ -1,6 +1,6 @@
 # Balance App
 
-// todo
+Try the [deployed app](https://alissa9090.github.io/react-redux-balances-app/) or read below how to run it locally.
 
 ## How to run locally
 

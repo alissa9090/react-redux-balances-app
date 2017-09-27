@@ -27,10 +27,15 @@ h1 {
   align-items: center;
   justify-content: space-between;
   background-color: #f7f7f7 !important;
-  font-size: 20px;
+  font-size: 18px;
 }
 
-.account-form {
+.account-list-account a {
+  text-decoration: none;
+  color: black;
+}
+
+.account-form, .transaction-form {
   padding: 15px;
 }
 
@@ -38,5 +43,9 @@ h1 {
   width: auto !important;
   float: right;
   margin-right: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
+}
+
+.negative-number {
+  color: red;
 }

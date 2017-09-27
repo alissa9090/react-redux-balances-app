@@ -1,13 +1,20 @@
-export function createTransaction(id, accountId, amount, remark, date = new Date().getTime()) {
+export function createTransaction(id, accountId, amount, date = new Date().getTime()) {
   return {
     type: "CREATE_TRANSACTION",
-    payload: {id, accountId, amount, remark, date}
+    payload: {id, accountId, amount, date}
   }
 }
 
-export function reconcile(id, amount, remark, date = new Date().getTime()) {
+export function updateTransaction(id, accountId, amount, date = new Date().getTime()) {
+  return {
+    type: "UPDATE_TRANSACTION",
+    payload: {id, accountId, amount, date}
+  }
+}
+
+export function reconcile(id, amount, date = new Date().getTime()) {
   return {
     type: "CREATE_TRANSACTION",
-    payload: {id, accountId: 'ADMIN', amount, remark, date}
+    payload: {id, accountId: 'ADMIN', amount, date}
   }
 }

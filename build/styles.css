@@ -1,18 +1,1 @@
-.account-list-account {
-  margin: 20px;
-  padding: 15px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.account-form {
-  padding: 15px;
-}
-
-.show-hidden-accounts {
-  width: auto !important;
-  float: right;
-}
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
+html{font-family:Roboto,sans-serif;-webkit-font-smoothing:antialiased}body{font-size:15px;line-height:24px;margin:0}h1{display:block;font-size:2em;-webkit-margin-before:.67em;-webkit-margin-after:.67em;-webkit-margin-start:0;-webkit-margin-end:0;font-weight:700}.account-list-account{margin:20px;padding:20px;text-align:center;display:flex;align-items:center;justify-content:space-between;background-color:#f7f7f7!important;font-size:18px}.account-list-account a{text-decoration:none;color:#000}.account-form,.transaction-form{padding:15px}.show-hidden-accounts{width:auto!important;float:right;margin-right:20px;margin-top:20px}.negative-number{color:red}

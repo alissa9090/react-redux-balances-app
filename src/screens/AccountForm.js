@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import { get, isEmpty } from 'lodash';
 import { Link } from 'react-router';
@@ -22,7 +22,7 @@ import TextField from 'material-ui/TextField';
     updateAccountNameAction: updateAccountName
   }
 )
-class AccountForm extends React.Component {
+class AccountForm extends PureComponent {
 constructor(props) {
     super(props);
 
@@ -66,7 +66,7 @@ constructor(props) {
         />
         <div className="account-form">
           <TextField
-            hintText="Name"
+            floatingLabelText="Name"
             value={this.state.name}
             onChange={this.handleNameChange}
             errorText={this.state.nameValidation}

@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, hashHistory } from "react-router"
 import { applyMiddleware, createStore } from "redux"
-import logger from "redux-logger"
 import thunk from "redux-thunk"
 import localforage from 'localforage';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -19,11 +18,10 @@ const INDEX_DB_KEY = 'ReactReduxBalanceApp';
 export default class App extends PureComponent {
   constructor(props) {
     super(props)
-    const middleware = composeWithDevTools(applyMiddleware(thunk, logger()));
+    const middleware = composeWithDevTools(applyMiddleware(thunk));
     this.store = createStore(reducer, middleware);
   }
   async componentDidMount() {
-    console.log('get store from index db');
     await localforage.setDriver([
       localforage.INDEXEDDB
     ])
@@ -31,17 +29,13 @@ export default class App extends PureComponent {
     this.store.dispatch(init(state));
 
     window.addEventListener('beforeunload', this.saveState);
-
-    console.log(state);
   }
   saveState = () => {
-    console.log('put store to index db');
-    localforage.setItem(INDEX_DB_KEY, this.store.getState(), () => window.removeEventListener('beforeunload', this.saveState))
+    window.removeEventListener('beforeunload', this.saveState)
+    localforage.setItem(INDEX_DB_KEY, this.store.getState());
   }
   componentWillUnmount() {
-    console.log('remove')
-    this.saveState()
-    window.removeEventListener('beforeunload', this.saveState);
+    this.saveState();
   }
   render() {
     return (
