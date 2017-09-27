@@ -1,14 +1,7 @@
 import { get, omit, toNumber } from 'lodash';
 import Big from 'big.js';
 
-const accounts = (state = {
-  ADMIN: {
-    id: 'ADMIN',
-    name: 'Admin',
-    balance: 0,
-    hidden: true
-  }
-}, action) => {
+const accounts = (state = {}, action) => {
   const {type, payload} = action;
   switch (type) {
     case 'INIT': {

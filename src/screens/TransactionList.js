@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { map, sortBy } from 'lodash';
+import { map, orderBy } from 'lodash';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -15,17 +15,9 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-const Transaction = ({id, accountId, amount, date}) => {
-  return (
-    <div>
-      Transaction
-    </div>
-  );
-};
-
 @connect(
   state => ({
-    transactions: state.transactions,
+    transactions: orderBy(state.transactions, ['date'], ['desc']),
     accounts: state.accounts
   }),
   {

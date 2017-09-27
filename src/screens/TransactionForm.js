@@ -4,7 +4,7 @@ import { get, isEmpty, find, filter, map, toNumber, isNaN } from 'lodash';
 import { Link } from 'react-router';
 import uuidv4 from 'uuid/v4';
 
-import { createTransaction, updateTransaction } from '../actions/transactions';
+import { createTransaction } from '../actions/transactions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -18,28 +18,25 @@ import MenuItem from 'material-ui/MenuItem';
 
 @connect(
   (state, props) => {
-    const transactionId = get(props, 'params.transactionId');
     return {
-      transaction: find(state.transactions, transaction => transaction.id === transactionId) || {},
       accounts: filter(state.accounts, account => !account.hidden)
     };
   },
   {
-    createTransactionAction: createTransaction,
-    updateTransactionAction: updateTransaction
+    createTransactionAction: createTransaction
   }
 )
 export default class TransactionForm extends PureComponent {
   constructor(props) {
     super(props);
 
-    const accountId = get(this.props, 'location.query.accountId');
+    const accountId = get(props, 'params.accountId');
 
     this.state = {
-      amount: props.transaction.amount || '',
+      amount: '',
       amountValidation: '',
-      date: props.transaction.date ? new Date(props.transaction.date) : new Date(),
-      accountId: props.transaction.accountId || accountId
+      date: new Date(),
+      accountId: accountId
     };
   }
 
@@ -81,26 +78,21 @@ export default class TransactionForm extends PureComponent {
       this.setState({amountValidation: 'The amount must be a number.'});
       return;
     }
-    const transactionId = get(this.props, 'params.transactionId');
+
     const {accountId, date} = this.state;
-    if (isEmpty(transactionId)) {
-      this.props.createTransactionAction(uuidv4(), accountId, amountNumber, date.toISOString());
-    } else {
-      this.props.updateTransactionAction(transactionId, accountId, amountNumber, date.toISOString());
-    }
+    this.props.createTransactionAction(uuidv4(), accountId, amountNumber, date.toISOString());
     
     this.props.history.push('/');
   }
 
   render() {
-    const transactionId = get(this.props, 'params.transactionId');
     const items = map(this.props.accounts, account =>
       <MenuItem value={account.id} key={account.id} primaryText={account.name} />
     );
     return (
       <div>
         <AppBar
-          title={isEmpty(transactionId) ? 'New transaction' : 'Edit transaction'}
+          title="Create transaction"
           iconElementLeft={<IconButton containerElement={<Link to="/" />}><NavigationBack /></IconButton>}
           iconElementRight={<FlatButton label="Save" onClick={this.onPressSave} />}
         />

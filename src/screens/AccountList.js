@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
-import { map, filter, omit } from 'lodash';
+import { map, filter, omit, reduce } from 'lodash';
 import { Link } from 'react-router'
+import Big from 'big.js';
 
 import { createAccount, hideAccount, restoreAccount, deleteAccount } from '../actions/accounts';
 
@@ -21,9 +22,8 @@ const MainMenu = (props) => (
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     iconStyle={{fill: 'white'}}>
-    <MenuItem containerElement={<Link to="/account-form" />} primaryText="Create account" />
-    <MenuItem primaryText="Reconcile" />
-    <MenuItem containerElement={<Link to="/transactions" />} primaryText="Display transactions" />
+    <MenuItem containerElement={<Link to="/account-form" />} primaryText="New account" />
+    <MenuItem containerElement={<Link to="/transactions" />} primaryText="Transactions" />
   </IconMenu>
 );
 
@@ -72,6 +72,7 @@ class AccountMenu extends PureComponent {
           actions={actions}
           modal={true}
           open={this.state.showModal}>
+          The transactions associated with the account will be deleted, and the account balance will be deducted from the total balance.
           Are you sure you want to delete the account and all relative transactions?
         </Dialog>
       </div>
@@ -81,8 +82,8 @@ class AccountMenu extends PureComponent {
 
 const Account = ({id, name, balance, hidden, restoreAccountAction, hideAccountAction, deleteAccountAction}) => {
   return (
-    <Paper className="account-list-account" zDepth={2}>
-      <Link to={{ pathname: '/transaction-form', search: `?accountId=${id}` }}>
+    <Paper className={`account-list-account${hidden ? ' hidden-account' : ''}`} zDepth={2}>
+      <Link to={`/transaction-form/${id}`}>
         <div>
           <span>{`${name}: `}</span>
           <span className={balance < 0 ? 'negative-number' : ''}>{`${balance} €`}</span>
@@ -98,10 +99,12 @@ const Account = ({id, name, balance, hidden, restoreAccountAction, hideAccountAc
   );
 };
 
+const balancesSumm = (summ, account) => summ.plus(account.balance);
+
 @connect(
   state => ({
-    accounts: omit(state.accounts, 'ADMIN'),
-    totalBalance: state.balances.total
+    accounts: state.accounts,
+    totalBalance: reduce(state.accounts, balancesSumm, Big(0)).toString()
   }),
   {
     createAccountAction: createAccount,
@@ -127,7 +130,7 @@ export default class AccountList extends PureComponent {
     const {totalBalance, accounts, restoreAccountAction, hideAccountAction, deleteAccountAction} = this.props;
     const {showHiddenAccounts} = this.state;
 
-    const visibleAccounts = filter(accounts, account => account.hidden === showHiddenAccounts);
+    const visibleAccounts = showHiddenAccounts ? accounts : filter(accounts, account => !account.hidden);
     return (
       <div>
         <AppBar
@@ -148,7 +151,7 @@ export default class AccountList extends PureComponent {
         </div>
         <Toggle
           className="show-hidden-accounts"
-          label="Hidden accounts"
+          label="Show hidden accounts"
           toggled={this.state.showHiddenAccounts}
           onToggle={this.toggleShowHiddenAccounts} />
       </div>

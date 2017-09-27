@@ -44,7 +44,7 @@ export default class App extends PureComponent {
           <Route path="/" component={AccountList} />
           <Route path="/account-form(/:accountId)" component={AccountForm} />
           <Route path="/transactions" component={TransactionList} />
-          <Route path="/transaction-form(/:transactionId)" component={TransactionForm} />
+          <Route path="/transaction-form/:accountId" component={TransactionForm} />
         </Router>
       </Provider>
     );
