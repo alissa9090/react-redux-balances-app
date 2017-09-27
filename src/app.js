@@ -27,18 +27,6 @@ export default class App extends PureComponent {
     ])
     const state = await localforage.getItem(INDEX_DB_KEY);
     this.store.dispatch(init(state));
-
-    window.addEventListener('beforeunload', this.saveState);
-    window.addEventListener('unload', this.saveState);
-  }
-  saveState = () => {
-    window.removeEventListener('beforeunload', this.saveState)
-    window.removeEventListener('unload', this.saveState)
-    localforage.setItem(INDEX_DB_KEY, this.store.getState());
-    return null;
-  }
-  componentWillUnmount() {
-    this.saveState();
   }
   render() {
     return (
