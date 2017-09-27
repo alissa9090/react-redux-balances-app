@@ -1,6 +1,12 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
-import { get, isEmpty, find, filter, map, toNumber, isNaN } from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import find from 'lodash/find';
+import filter from 'lodash/filter';
+import map from 'lodash/map';
+import toNumber from 'lodash/toNumber';
+import isNaN from 'lodash/isNaN';
 import { Link } from 'react-router';
 import uuidv4 from 'uuid/v4';
 

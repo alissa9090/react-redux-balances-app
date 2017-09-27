@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { map, orderBy } from 'lodash';
+import map from 'lodash/map';
+import orderBy from 'lodash/orderBy';
 
 import { deleteTransactions } from '../actions/transactions';
 

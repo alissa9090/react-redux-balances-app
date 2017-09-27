@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
-import { get, isEmpty } from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import { Link } from 'react-router';
 import uuidv4 from 'uuid/v4';
 

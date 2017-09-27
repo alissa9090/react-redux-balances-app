@@ -1,6 +1,9 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
-import { map, filter, omit, reduce } from 'lodash';
+import map from 'lodash/map';
+import filter from 'lodash/filter';
+import omit from 'lodash/omit';
+import reduce from 'lodash/reduce';
 import { Link } from 'react-router'
 import Big from 'big.js';
 

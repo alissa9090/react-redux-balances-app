@@ -1,4 +1,6 @@
-import {get, filter, find} from 'lodash';
+import get from 'lodash/get';
+import filter from 'lodash/filter';
+import find from 'lodash/find';
 
 const transactions = (state = [], action) => {
   const {type, payload} = action;

@@ -1,4 +1,6 @@
-import { get, omit, toNumber } from 'lodash';
+import get from 'lodash/get';
+import omit from 'lodash/omit';
+import toNumber from 'lodash/toNumber';
 import Big from 'big.js';
 
 const accounts = (state = {}, action) => {
