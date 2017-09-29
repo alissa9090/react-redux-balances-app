@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './app'
-import '../css/style.css'
+import '../assets/css/style.css'
 
 const ThemedApp = () => (
   <MuiThemeProvider>
@@ -10,4 +10,10 @@ const ThemedApp = () => (
   </MuiThemeProvider>
 );
 
-ReactDOM.render(<ThemedApp />, document.getElementById('app'))
+ReactDOM.render(<ThemedApp />, document.getElementById('app'));
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+           .register('./service-worker.js')
+           .then(function() { console.log('Service Worker Registered'); });
+}
