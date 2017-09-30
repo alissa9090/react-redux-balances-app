@@ -1,4 +1,4 @@
-const cacheName = 'react-redux-balance-app';
+const cacheName = 'react-redux-balance-app-v0.1';
 const filesToCache = [
   '/react-redux-balances-app/',
   '/react-redux-balances-app/build/styles.css',
