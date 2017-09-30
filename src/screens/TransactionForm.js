@@ -54,8 +54,10 @@ export default class TransactionForm extends PureComponent {
   }
 
   handleDateChange = (event, date) => {
-    const time = new Date(this.state.date).getTime();
-    date.setTime(time);
+    const hours = this.state.date.getHours();
+    const minutes = this.state.date.getMinutes();
+    date.setHours(hours);
+    date.setMinutes(minutes);
     this.setState({
       date
     });
