@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import map from 'lodash/map';
 import orderBy from 'lodash/orderBy';
+import filter from 'lodash/filter';
 
 import { deleteTransactions } from '../actions/transactions';
 
@@ -20,6 +21,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 @connect(
   state => ({
@@ -36,7 +39,8 @@ export default class TransactionList extends PureComponent {
 
     this.state = {
       selectedTransactions: [],
-      showModal: false
+      showModal: false,
+      accountId: 'all'
     };
   }
 
@@ -46,7 +50,10 @@ export default class TransactionList extends PureComponent {
 
   handleRowSelected = (selectedRows) => {
     const {transactions} = this.props;
-    const selectedTransactions = map(selectedRows, index => transactions[index].id);
+    const {accountId} = this.state;
+
+    const filteredTransactions = accountId === 'all' ? transactions : filter(transactions, t => t.accountId === accountId);
+    const selectedTransactions = map(selectedRows, index => filteredTransactions[index].id);
     this.setState({selectedTransactions});
   }
 
@@ -56,9 +63,21 @@ export default class TransactionList extends PureComponent {
     this.toggleDeleteTransactionsModal();
   }
 
+  handleAccountChange = (event, date, value) => {
+    this.setState({
+      accountId: value
+    });
+  }
+
   render() {
     const {transactions, accounts} = this.props;
-    const {selectedTransactions} = this.state;
+    const {selectedTransactions, accountId} = this.state;
+
+    const filteredTransactions = accountId === 'all' ? transactions : filter(transactions, t => t.accountId === accountId);
+    
+    const items = [<MenuItem value="all" key="all" primaryText="All accounts" />].concat(map(this.props.accounts, account =>
+      <MenuItem value={account.id} key={account.id} primaryText={account.name} />
+    ));
 
     const actions = [
       <FlatButton
@@ -80,6 +99,16 @@ export default class TransactionList extends PureComponent {
           iconElementLeft={<IconButton containerElement={<Link to="/" />}><NavigationBack /></IconButton>}
           iconElementRight={selectedTransactions.length > 0 ? <IconButton onClick={this.toggleDeleteTransactionsModal}><Delete /></IconButton> : undefined}
         />
+        <div className="transactions-filter">
+          <DropDownMenu
+            maxHeight={300}
+            value={this.state.accountId}
+            onChange={this.handleAccountChange}
+            underlineStyle={{margin: 0}}
+            labelStyle={{paddingLeft: 0}}>
+            {items}
+          </DropDownMenu>
+        </div>
         <Table style={{tableLayout: 'auto'}} multiSelectable onRowSelection={this.handleRowSelected}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
@@ -89,7 +118,7 @@ export default class TransactionList extends PureComponent {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} deselectOnClickaway={false}>
-            {map(transactions, transaction =>
+            {map(filteredTransactions, transaction =>
               <TableRow key={transaction.id} selected={this.state.selectedTransactions.includes(transaction.id)}>
                 <TableRowColumn style={{whiteSpace: 'normal'}}>{new Date(transaction.date).toLocaleString()}</TableRowColumn>
                 <TableRowColumn className={transaction.amount < 0 ? 'negative-number' : ''}>{transaction.amount}</TableRowColumn>

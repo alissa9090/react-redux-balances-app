@@ -53,3 +53,8 @@ h1 {
 .negative-number {
   color: red;
 }
+
+.transactions-filter {
+  margin-left: 20px;
+  margin-top: 20px;
+}
