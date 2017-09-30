@@ -2,11 +2,11 @@ import React, {PureComponent} from 'react';
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, hashHistory } from "react-router"
 import { applyMiddleware, createStore } from "redux"
-import thunk from "redux-thunk"
 import localforage from 'localforage';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import reducer from "./reducers"
+import createSyncStoreWithIndexedDbMiddleware from './middleware/sync-store-wirh-indexed-db'
 import { init } from './actions/common';
 import AccountList from './screens/AccountList';
 import AccountForm from './screens/AccountForm';
@@ -18,7 +18,7 @@ const INDEX_DB_KEY = 'ReactReduxBalanceApp';
 export default class App extends PureComponent {
   constructor(props) {
     super(props)
-    const middleware = composeWithDevTools(applyMiddleware(thunk));
+    const middleware = composeWithDevTools(applyMiddleware(createSyncStoreWithIndexedDbMiddleware(INDEX_DB_KEY)));
     this.store = createStore(reducer, middleware);
   }
   async componentDidMount() {
