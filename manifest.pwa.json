@@ -24,6 +24,6 @@
     }],
   "start_url": "/react-redux-balances-app/",
   "display": "standalone",
-  "background_color": "#00bcd4",
-  "theme_color": "#d4be00"
+  "background_color": "#77b3d4",
+  "theme_color": "#e0995e"
 }
