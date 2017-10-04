@@ -8,25 +8,26 @@ const accounts = (state = {}, action) => {
   switch (type) {
     case 'INIT': {
       const initiallAccounts = get(payload, 'accounts', {});
-      return {...state, ...initiallAccounts}
+      return {...state, ...initiallAccounts};
     }
-    case "CREATE_ACCOUNT":
-      return {...state, [payload.id]: payload}
-    case "UPDATE_ACCOUNT":
-      return {...state, [payload.id]: {...state[payload.id], name: payload.name}}
-    case "HIDE_ACCOUNT":
-      return {...state, [payload.id]: {...state[payload.id], hidden: true}}
-    case "RESTORE_ACCOUNT":
-      return {...state, [payload.id]: {...state[payload.id], hidden: false}}
-    case "DELETE_ACCOUNT":
-      return omit(state, payload.id)
-    case "CREATE_TRANSACTION": {
-      const accountBalance = Big(get(state, [payload.accountId, 'balance'], 0)).plus(payload.amount).toString();
+    case 'CREATE_ACCOUNT':
+      return {...state, [payload.id]: payload};
+    case 'UPDATE_ACCOUNT':
+      return {...state, [payload.id]: {...state[payload.id], name: payload.name}};
+    case 'HIDE_ACCOUNT':
+      return {...state, [payload.id]: {...state[payload.id], hidden: true}};
+    case 'RESTORE_ACCOUNT':
+      return {...state, [payload.id]: {...state[payload.id], hidden: false}};
+    case 'DELETE_ACCOUNT':
+      return omit(state, payload.id);
+    case 'CREATE_TRANSACTION': {
+      const accountBalance = new Big(get(state, [payload.accountId, 'balance'], 0)).plus(payload.amount).toString();
 
-      return {...state, [payload.accountId]: {...state[payload.accountId], balance: toNumber(accountBalance)}}
+      return {...state, [payload.accountId]: {...state[payload.accountId], balance: toNumber(accountBalance)}};
     }
+    default:
+      return state;
   }
-  return state
-}
+};
 
 export default accounts;

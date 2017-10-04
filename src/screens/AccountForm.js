@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
-import { Link } from 'react-router';
+import {Link} from 'react-router-dom';
 import uuidv4 from 'uuid/v4';
 
-import { createAccount, updateAccountName } from '../actions/accounts';
+import {createAccount, updateAccountName} from '../actions/accounts';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -15,7 +15,7 @@ import TextField from 'material-ui/TextField';
 
 @connect(
   (state, props) => {
-    const accountId = get(props, 'params.accountId');
+    const accountId = get(props, 'match.params.accountId');
     return {account: get(state.accounts, accountId, {})};
   },
   {
@@ -35,11 +35,11 @@ constructor(props) {
 
   onPressSave = () => {
     const {name} = this.state;
-    if (isEmpty(name)){
+    if (isEmpty(name)) {
       this.setState({nameValidation: 'This field is required.'});
       return;
     }
-    const accountId = get(this.props, 'params.accountId');
+    const accountId = get(this.props, 'match.params.accountId');
     if (isEmpty(accountId)) {
       this.props.createAccountAction(uuidv4(), this.state.name);
     } else {
@@ -57,7 +57,7 @@ constructor(props) {
   };
 
   render() {
-    const accountId = get(this.props, 'params.accountId');
+    const accountId = get(this.props, 'match.params.accountId');
     return (
       <div>
         <AppBar
@@ -78,4 +78,4 @@ constructor(props) {
   }
 }
 
-export default AccountForm
+export default AccountForm;

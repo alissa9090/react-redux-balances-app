@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import map from 'lodash/map';
 import orderBy from 'lodash/orderBy';
 import filter from 'lodash/filter';
 
-import { deleteTransactions } from '../actions/transactions';
+import {deleteTransactions} from '../actions/transactions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
+  TableRowColumn
 } from 'material-ui/Table';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -130,7 +130,7 @@ export default class TransactionList extends PureComponent {
         <Dialog
           title="Warning"
           actions={actions}
-          modal={true}
+          modal
           open={this.state.showModal}>
           Are you sure you want to delete the selected transactions?
         </Dialog>

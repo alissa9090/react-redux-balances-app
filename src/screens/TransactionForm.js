@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import find from 'lodash/find';
@@ -7,10 +7,10 @@ import filter from 'lodash/filter';
 import map from 'lodash/map';
 import toNumber from 'lodash/toNumber';
 import isNaN from 'lodash/isNaN';
-import { Link } from 'react-router';
+import {Link} from 'react-router-dom';
 import uuidv4 from 'uuid/v4';
 
-import { createTransaction } from '../actions/transactions';
+import {createTransaction} from '../actions/transactions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -23,7 +23,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 @connect(
-  (state, props) => {
+  state => {
     return {
       accounts: filter(state.accounts, account => !account.hidden)
     };
@@ -36,13 +36,13 @@ export default class TransactionForm extends PureComponent {
   constructor(props) {
     super(props);
 
-    const accountId = get(props, 'params.accountId');
+    const accountId = get(props, 'match.params.accountId');
 
     this.state = {
       amount: '',
       amountValidation: '',
       date: new Date(),
-      accountId: accountId
+      accountId
     };
   }
 
@@ -77,7 +77,7 @@ export default class TransactionForm extends PureComponent {
 
   onPressSave = () => {
     const {amount} = this.state;
-    if (isEmpty(amount)){
+    if (isEmpty(amount)) {
       this.setState({amountValidation: 'This field is required.'});
       return;
     }

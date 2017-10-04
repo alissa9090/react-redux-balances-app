@@ -1,6 +1,6 @@
 export function init(payload) {
   return {
-    type: "INIT",
+    type: 'INIT',
     payload
-  }
+  };
 }

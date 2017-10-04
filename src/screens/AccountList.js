@@ -1,13 +1,12 @@
 import React, {PureComponent} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import map from 'lodash/map';
 import filter from 'lodash/filter';
-import omit from 'lodash/omit';
 import reduce from 'lodash/reduce';
-import { Link } from 'react-router'
+import {Link} from 'react-router-dom';
 import Big from 'big.js';
 
-import { createAccount, hideAccount, restoreAccount, deleteAccount } from '../actions/accounts';
+import {createAccount, hideAccount, restoreAccount, deleteAccount} from '../actions/accounts';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -19,7 +18,7 @@ import Toggle from 'material-ui/Toggle';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-const MainMenu = (props) => (
+const MainMenu = () => (
   <IconMenu
     iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -31,7 +30,7 @@ const MainMenu = (props) => (
 );
 
 class AccountMenu extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -73,7 +72,7 @@ class AccountMenu extends PureComponent {
         <Dialog
           title="Warning"
           actions={actions}
-          modal={true}
+          modal
           open={this.state.showModal}>
           The transactions associated with the account will be deleted, and the account balance will be deducted from the total balance.
           Are you sure you want to delete the account and all relative transactions?
@@ -107,7 +106,7 @@ const balancesSumm = (summ, account) => summ.plus(account.balance);
 @connect(
   state => ({
     accounts: state.accounts,
-    totalBalance: reduce(state.accounts, balancesSumm, Big(0)).toString()
+    totalBalance: reduce(state.accounts, balancesSumm, new Big(0)).toString()
   }),
   {
     createAccountAction: createAccount,
@@ -122,7 +121,7 @@ export default class AccountList extends PureComponent {
 
     this.state = {
       showHiddenAccounts: false
-    }
+    };
   }
 
   toggleShowHiddenAccounts = () => {
