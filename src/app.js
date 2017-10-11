@@ -34,7 +34,7 @@ export default class App extends PureComponent {
         <MemoryRouter>
           <div>
             <Route exact path="/" component={AccountList} />
-            <Route path="/account-form(/:accountId)" component={AccountForm} />
+            <Route path="/account-form/:accountId?" component={AccountForm} />
             <Route path="/transactions" component={TransactionList} />
             <Route path="/transaction-form/:accountId" component={TransactionForm} />
           </div>
