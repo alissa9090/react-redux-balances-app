@@ -1,4 +1,4 @@
-# Balance App
+# Balance Progressive Web App
 
 Try the [deployed app](https://alissa9090.github.io/react-redux-balances-app/) or read below how to run it locally.
 
